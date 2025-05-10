@@ -39,6 +39,7 @@ int LeftSpeed = 0;
 int Integral = 0;
 int Val = 0;
 unsigned int Position = 3500;
+bool turn = false;
 
 byte LineOk = 0;
 byte WhiteLine = 1;
@@ -107,6 +108,32 @@ int ReadSensor() {
   return Val;
 }
 
+void detect_turn() {
+
+  turn = true;
+
+  for (int i = 0; i < 4; i++) {
+
+    if (SensValX[i] < 900) {
+
+      turn = false;
+
+    }
+
+  }
+
+  for (int i = 4; i < 8; i++) {
+
+    if (SensValX[i] > 900) {
+
+      turn = false;
+
+    }
+
+  }
+
+}
+
 void setup() {
   pinMode(Rpwm1, OUTPUT);
   pinMode(Lpwm1, OUTPUT);
@@ -147,6 +174,8 @@ void setup() {
   Blink();
 }
 
+
+
 void loop() {
 
 // MZ80 Cisim Algılama Kodları   
@@ -164,6 +193,9 @@ void loop() {
 
 
   Position = ReadSensor();
+
+  detect_turn();
+
   Error = Position - 3500;
   Integral += Error;
 
