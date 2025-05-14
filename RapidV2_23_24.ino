@@ -33,13 +33,16 @@ int SensVal[8];
 int SensValX[8];
 int FinalError = 0;
 int Error = 0;
-int ExtraSpeed = 0;
+int ExtraSpeed = 100;
 int RightSpeed = 0;
 int LeftSpeed = 0;
 int Integral = 0;
 int Val = 0;
 unsigned int Position = 3500;
 bool turn = false;
+
+int extraTurn = 50;
+int extraStraight = 100;
 
 byte LineOk = 0;
 byte WhiteLine = 1;
@@ -212,7 +215,10 @@ void loop() {
 
   Position = ReadSensor();
 
-  detect_turn();
+  detect_straight();
+
+  if (turn) {ExtraSpeed = extraTurn;}
+  else {ExtraSpeed = extraStraight;}
 
   Error = Position - 3500;
   Integral += Error;
