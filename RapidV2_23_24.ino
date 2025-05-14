@@ -134,6 +134,24 @@ void detect_turn() {
 
 }
 
+void detect_straight() {
+
+  turn = false;
+
+  for (int i = 0; i < 4; i++) {
+
+    int dif = SensVal[i] - SensVal[7 - i];
+
+    if (dif > 100 || dif < -100) {
+
+      turn = true;
+
+    }
+
+  }
+
+}
+
 void setup() {
   pinMode(Rpwm1, OUTPUT);
   pinMode(Lpwm1, OUTPUT);
